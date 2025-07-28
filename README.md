@@ -3,8 +3,8 @@
 <p>一个可配置的扩展插件，用于 <strong>CS 起源 ZombieScenario</strong> 模式，允许 <strong>BOT 主动攻击 NPC 丧尸并具备智能 AI 行为</strong>。</p>
 
 <h2>⚠️ [注意 / Warning]</h2>
-<p><strong>中文：</strong>BOT 与 NPC 一同使用时，<u>禁止在已存在 NPC 的情况下复活或添加 BOT</u>。这样做会导致服务器崩溃，可能与 CS:S 引擎底层有关。真人玩家不受影响！</p>
-<p><strong>EN:</strong> When using BOTs together with NPCs, <u>do NOT respawn or add BOTs while NPCs already exist</u>. This may cause the server to crash, possibly due to CS:S engine internals. Human players are NOT affected!</p>
+<p><strong></strong>BOT 与 NPC 一同使用时，<u>禁止在已存在 NPC 的情况下复活或添加 BOT</u>。这样做会导致服务器崩溃，可能与 CS:S 引擎底层有关。真人玩家不受影响！</p>
+<p><strong></strong> When using BOTs together with NPCs, <u>do NOT respawn or add BOTs while NPCs already exist</u>. This may cause the server to crash, possibly due to CS:S engine internals. Human players are NOT affected!</p>
 
 
 <h3>📦 插件依赖</h3>
