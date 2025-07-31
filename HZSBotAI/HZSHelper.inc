@@ -114,7 +114,3 @@ stock void GetViewVector(float fVecAngle[3], float fOutPut[3])
 	fOutPut[2] = -Sine(fVecAngle[0] / (180 / FLOAT_PI));
 }
 
-public void OnClientDisconnect(int client)
-{
-    g_NextBotAttack[client] = 0.0;
-}

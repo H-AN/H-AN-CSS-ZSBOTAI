@@ -116,3 +116,8 @@ public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:ang
 	return Plugin_Continue;
 }
 
+public void OnClientDisconnect(int client)
+{
+    g_NextBotAttack[client] = 0.0;
+}
+
