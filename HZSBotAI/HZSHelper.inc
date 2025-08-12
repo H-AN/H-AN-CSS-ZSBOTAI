@@ -114,3 +114,44 @@ stock void GetViewVector(float fVecAngle[3], float fOutPut[3])
 	fOutPut[2] = -Sine(fVecAngle[0] / (180 / FLOAT_PI));
 }
 
+bool IsClientInFront(int client)
+{
+    if (!IsClientInGame(client) || !IsPlayerAlive(client))
+        return false;
+
+    float vOrigin[3], vAngles[3];
+    GetClientEyePosition(client, vOrigin);
+    GetClientEyeAngles(client, vAngles);
+
+    Handle trace = TR_TraceRayFilterEx(vOrigin, vAngles, MASK_SHOT, RayType_Infinite, TraceEntityFilterPlayer);
+
+    if (TR_DidHit(trace))
+    {
+        int index = TR_GetEntityIndex(trace);
+        if (index > 0 && index <= MaxClients && IsClientInGame(index) && IsPlayerAlive(index))
+        {
+            CloseHandle(trace);
+            return true;
+        }
+    }
+
+    CloseHandle(trace);
+    return false;
+}
+
+void SwitchWeapon(int client, int weapon)
+{
+    if(IsValidEntity(weapon))
+    {
+        char classname[32];
+        GetEntityClassname(weapon, classname, sizeof(classname));
+        FakeClientCommand(client, "use %s", classname);
+    }
+}
+
+public bool TraceEntityFilterPlayer(int entity, int contentsMask)
+{
+    // 只允许射线命中玩家/Bot（即 client）
+    return (entity > 0 && entity <= MaxClients);
+}
+

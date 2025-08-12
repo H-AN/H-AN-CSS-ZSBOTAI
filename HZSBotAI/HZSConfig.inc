@@ -36,6 +36,8 @@ void LoadHZSBotAIConfig()
     g_HZSBOTCFG.ForwardDistance = KvGetSafeFloat(kv, "Forward_Distance", 400.0);
     g_HZSBOTCFG.ForwardSpeed = KvGetSafeFloat(kv, "Forward_Speed", 220.0);
     g_HZSBOTCFG.BlockBotUseGrenade = KvGetSafeBool(kv, "Block_BotUse_Grenade", true);
+    g_HZSBOTCFG.BlockBotAttackBot = KvGetSafeBool(kv, "Block_BotAttackBot", true);
+    g_HZSBOTCFG.UseTraceBlockBotAttackBot = KvGetSafeBool(kv, "Use_TraceBlockBotAttackBot", true);
 
     delete kv;
 
@@ -56,6 +58,8 @@ void LoadDefaultConfigValues()
     g_HZSBOTCFG.ForwardDistance = 400.0;
     g_HZSBOTCFG.ForwardSpeed = 220.0;
     g_HZSBOTCFG.BlockBotUseGrenade = true;
+    g_HZSBOTCFG.BlockBotAttackBot = true;
+    g_HZSBOTCFG.UseTraceBlockBotAttackBot = true;
 }
 
 void WriteDefaultScenarioConfig(const char[] path)
@@ -75,6 +79,9 @@ void WriteDefaultScenarioConfig(const char[] path)
     WriteFileLine(file, "// Forward_Distance 前进距离 与目标大于此距离 向目标移动");
     WriteFileLine(file, "// Forward_Speed 前进速度");
     WriteFileLine(file, "// Block_BotUse_Grenade 是否禁止BOT使用手雷 起源BOT捏住手雷不会松手投掷");
+    WriteFileLine(file, "// Block_BotAttackBot 是否开启禁止不同队伍的相互攻击");
+    WriteFileLine(file, "// Use_TraceBlockBotAttackBot 是否开启射线检查不同队伍禁止攻击");
+    WriteFileLine(file, "// 射线检查与游戏开局禁止bot攻击双重屏蔽攻击");
     WriteFileLine(file, "\"HZSBotAI\"");
     WriteFileLine(file, "{");
     WriteFileLine(file, "    \"enable_plugins\"    \"1\"");
@@ -87,6 +94,8 @@ void WriteDefaultScenarioConfig(const char[] path)
     WriteFileLine(file, "    \"Forward_Distance\"              \"400.0\"");
     WriteFileLine(file, "    \"Forward_Speed\"    \"220.0\"");
     WriteFileLine(file, "    \"Block_BotUse_Grenade\"    \"1\"");
+    WriteFileLine(file, "    \"Block_BotAttackBot\"    \"1\"");
+    WriteFileLine(file, "    \"Use_TraceBlockBotAttackBot\"    \"1\"");
     WriteFileLine(file, "}");
 
     CloseHandle(file);

@@ -10,7 +10,10 @@ enum struct HZSBOTCFG
     float ForwardDistance;
     float ForwardSpeed;
     bool BlockBotUseGrenade;
+    bool BlockBotAttackBot;
+    bool UseTraceBlockBotAttackBot;
 }
 HZSBOTCFG g_HZSBOTCFG;
 
+bool BlockShoot;
 float g_NextBotAttack[MAXPLAYERS + 1];
