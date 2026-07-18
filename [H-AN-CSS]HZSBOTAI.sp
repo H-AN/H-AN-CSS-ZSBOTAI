@@ -15,10 +15,9 @@ public Plugin:myinfo =
     name = "[华仔]CS起源大灾变BOTAI", 
     author = "华仔 H-AN", 
     description = "华仔 H-AN CS起源大灾变BOTAI", 
-    version = "2.0", 
+    version = "3.0", 
     url = "[华仔]CS起源大灾变BOTAI, QQ群107866133, github https://github.com/H-AN"
 };
-
 
 public void OnPluginStart()
 {
@@ -123,7 +122,7 @@ public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:ang
 			buttons &= ~IN_ATTACK; 
 		}
 
-		int target = GetClosestClient(client);
+		int target = GetClosestTarget(client);	
 		if (target <= -1 || !IsValidEntity(target)) 
 			return Plugin_Continue;
 
@@ -135,12 +134,29 @@ public Action OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:ang
 		GetEntPropVector(target, Prop_Send, "m_vecOrigin", targetPos);
 		float actualDistance = GetVectorDistance(clientPos, targetPos);
 
+		char entName[64];
+		GetEntPropString(target, Prop_Data, "m_iName", entName, sizeof(entName));
+		bool bIsBarnacle = StrEqual(entName, "barnacle_hitbox", false);
+
 		LookAtTarget(client, target);
-		if (g_HZSBOTCFG.BotStaySafeDistance && actualDistance < g_HZSBOTCFG.SafeDistance)
+
+		if (bIsBarnacle && actualDistance <= 50.0)
+		{
+			// 被藤壶抓住，强制攻击
+			float now = GetGameTime();
+			if (now >= g_NextBotAttack[client])
+			{
+				buttons |= IN_ATTACK;
+				g_NextBotAttack[client] = now + g_HZSBOTCFG.BotAttackCooldown;
+			}
+			return Plugin_Changed;
+		}
+
+		if (g_HZSBOTCFG.BotStaySafeDistance && actualDistance < g_HZSBOTCFG.SafeDistance && !bIsBarnacle)
 		{
 			vel[0] = (g_HZSBOTCFG.FallBackSpeed * -1.0);
 		}
-		else if (g_HZSBOTCFG.BotForwardToDistance && actualDistance > g_HZSBOTCFG.ForwardDistance)
+		else if (g_HZSBOTCFG.BotForwardToDistance && actualDistance > g_HZSBOTCFG.ForwardDistance && !bIsBarnacle)
 		{
 			vel[0] = g_HZSBOTCFG.ForwardSpeed;
 		}
